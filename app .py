@@ -3,6 +3,14 @@ from datetime import datetime
 import os
 import uuid
 import time
+import pandas as pd
+import requests
+import openai
+import nltk
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Setup directories
 UPLOAD_DIR = "uploads"
@@ -13,9 +21,12 @@ MOCK_ATS_MATCH = True
 
 # ---------------- SPLASH SCREEN ----------------
 def show_splash():
-    st.image("logo.png", use_column_width=True)
-    time.sleep(1)
-    st.experimental_rerun()
+    if os.path.exists("logo.png"):
+        st.image("logo.png", use_container_width=True)
+        time.sleep(1)
+        st.experimental_rerun()
+    else:
+        st.warning("Logo not found. Skipping splash screen.")
 
 # ---------------- LOGIN PAGE ----------------
 def login_page():
