@@ -2,6 +2,7 @@ import streamlit as st
 from datetime import datetime
 import os
 import uuid
+import time
 
 # Setup directories
 UPLOAD_DIR = "uploads"
@@ -9,6 +10,30 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Simulated resume matching result
 MOCK_ATS_MATCH = True
+
+# ---------------- SPLASH SCREEN ----------------
+def show_splash():
+    st.image("logo.png", use_column_width=True)
+    time.sleep(1)
+    st.experimental_rerun()
+
+# ---------------- LOGIN PAGE ----------------
+def login_page():
+    st.title("🔐 Login")
+    col1, col2 = st.columns(2)
+    with col1:
+        email = st.text_input("Email or Username")
+        password = st.text_input("Password", type="password")
+    with col2:
+        st.write("OR")
+        st.button("Continue with Google")
+
+    role = st.selectbox("Select Role", ["User", "Company", "Admin"])
+
+    if st.button("Login"):
+        st.session_state.logged_in = True
+        st.session_state.role = role
+        st.experimental_rerun()
 
 # ---------------- USER PROFILE FORM ----------------
 def user_profile():
@@ -94,11 +119,20 @@ def ai_tools():
 
 # ---------------- MAIN ----------------
 def main():
-    st.title("🧑 User Dashboard")
-    user_profile()
-    resume_management()
-    interview_section()
-    ai_tools()
+    st.set_page_config(page_title="Multi-Role AI App", layout="wide")
+
+    if "logged_in" not in st.session_state:
+        st.session_state.logged_in = False
+
+    if not st.session_state.logged_in:
+        show_splash()
+        login_page()
+    else:
+        st.title("🧑 User Dashboard")
+        user_profile()
+        resume_management()
+        interview_section()
+        ai_tools()
 
 if __name__ == "__main__":
     main()
