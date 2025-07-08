@@ -1,6 +1,6 @@
-streamlit
-spacy
-textstat
-pdfplumber
-python-docx
-docx
+streamlit==1.46.1
+pandas==2.3.1
+requests==2.32.4
+nltk==3.8.1
+python-dotenv==1.0.1
+
