@@ -1,0 +1,6 @@
+streamlit
+spacy
+textstat
+pdfplumber
+python-docx
+docx
